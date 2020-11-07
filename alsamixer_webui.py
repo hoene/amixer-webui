@@ -79,7 +79,8 @@ class Handler(Flask):
         for i in system_cards:
             card_number = i.split(" [")[0].strip()
             card_detail = Popen(["amixer", "-c", card_number, "info"], stdout=PIPE).communicate()[0]
-            cards[card_number] = self.__decode_string(card_detail).split("\n")[1].split(":")[1].replace("'", "").strip()
+            print(card_number, card_detail)
+            cards[card_number] = self.__decode_string(card_detail).split("\n")[0].split("/")[1].replace("'", "").strip() + " "+self.__decode_string(card_detail).split("\n")[1].split(":")[1].replace("'", "").strip()
 
         pulse = Popen(["amixer", "-D", "pulse", "info"], stdout=PIPE)
         pulse.communicate()
